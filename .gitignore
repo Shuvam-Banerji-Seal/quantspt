@@ -88,3 +88,4 @@ output-onlinepngtools.png
 # Local development notes (not shipped)
 *.local.md
 *.local.py
+research/
