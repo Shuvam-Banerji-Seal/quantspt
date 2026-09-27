@@ -151,6 +151,8 @@ module = [
     "pgmpy.*",
     "networkx.*",
     "sklearn.*",
+    "arch.*",
+    "statsmodels.*",
 ]
 ignore_missing_imports = true
 

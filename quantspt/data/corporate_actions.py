@@ -309,11 +309,12 @@ def detect_splits(
 
         detected: list[tuple[Any, float]] = []
         for idx in large_moves:
-            actual_ratio = ratios[idx]
+            pos = int(idx)
+            actual_ratio = ratios[pos]
             for split_ratio in common_ratios:
                 inv_ratio = 1.0 / split_ratio
                 if abs(actual_ratio - inv_ratio) < ratio_tolerance:
-                    date = col.index[idx + 1]
+                    date = col.index[pos + 1]
                     detected.append((date, split_ratio))
                     break
 
