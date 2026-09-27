@@ -113,7 +113,7 @@ class TestToHtml:
 
         out = to_html(fig, tmp_path / "fig.html")
         assert out.exists()
-        content = out.read_text()
+        content = out.read_text(encoding="utf-8")
         assert "plotly" in content.lower() or "scatter" in content.lower()
 
     def test_html_matplotlib_full(self, tmp_path: Path) -> None:
@@ -129,7 +129,7 @@ class TestToHtml:
 
         out = to_html(fig, tmp_path / "fig.html", full_html=True)
         assert out.exists()
-        content = out.read_text()
+        content = out.read_text(encoding="utf-8")
         assert "<!DOCTYPE html>" in content
         assert "<svg" in content
 
@@ -146,7 +146,7 @@ class TestToHtml:
 
         out = to_html(fig, tmp_path / "fig.html", full_html=False)
         assert out.exists()
-        content = out.read_text()
+        content = out.read_text(encoding="utf-8")
         assert "<svg" in content
         assert "<!DOCTYPE html>" not in content
 
@@ -177,7 +177,7 @@ class TestGenerateReport:
         result = self._backtest_result()
         out = generate_report(result, tmp_path / "report.html", format="html")
         assert out.exists()
-        content = out.read_text()
+        content = out.read_text(encoding="utf-8")
         assert "Backtest Report" in content
         assert "Performance Metrics" in content
         assert "Cumulative Returns" in content
@@ -202,7 +202,7 @@ class TestGenerateReport:
         result = self._backtest_result()
         out = generate_report(result, tmp_path / "report.tex", format="latex")
         assert out.exists()
-        content = out.read_text()
+        content = out.read_text(encoding="utf-8")
         assert r"\documentclass" in content
         assert r"\begin{tabular}" in content
 
@@ -217,7 +217,7 @@ class TestGenerateReport:
             include_metrics=False,
         )
         assert out.exists()
-        content = out.read_text()
+        content = out.read_text(encoding="utf-8")
         assert r"\begin{tabular}" not in content
 
     def test_pdf_report(self, tmp_path: Path) -> None:
@@ -301,7 +301,7 @@ class TestGenerateReport:
         }
         out = generate_report(result, tmp_path / "report.html", format="html")
         assert out.exists()
-        content = out.read_text()
+        content = out.read_text(encoding="utf-8")
         assert "AAPL" in content
 
     def test_weights_returns_empty_for_array(self, tmp_path: Path) -> None:
