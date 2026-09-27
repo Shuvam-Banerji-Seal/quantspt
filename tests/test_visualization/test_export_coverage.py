@@ -75,15 +75,32 @@ class TestToPdf:
         assert out.stat().st_size > 0
 
     def test_pdf_plotly(self, tmp_path: Path) -> None:
+        """Plotly → PDF requires the optional ``kaleido`` package.
+
+        Without it the exporter must raise its documented, actionable error;
+        with it a non-empty PDF must be produced. Both branches are asserted so
+        the test is meaningful in every environment.
+        """
         import plotly.graph_objects as go
 
         fig = go.Figure(data=[go.Scatter(x=[1, 2, 3], y=[1, 4, 9])])
 
         from quantspt.visualization.export import to_pdf
 
-        out = to_pdf(fig, tmp_path / "fig.pdf")
-        assert out.exists()
-        assert out.stat().st_size > 0
+        try:
+            import kaleido  # noqa: F401
+
+            have_kaleido = True
+        except ImportError:
+            have_kaleido = False
+
+        if have_kaleido:
+            out = to_pdf(fig, tmp_path / "fig.pdf")
+            assert out.exists()
+            assert out.stat().st_size > 0
+        else:
+            with pytest.raises(RuntimeError, match=r"[Kk]aleido"):
+                to_pdf(fig, tmp_path / "fig.pdf")
 
 
 class TestToHtml:
