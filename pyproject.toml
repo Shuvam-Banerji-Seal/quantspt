@@ -121,6 +121,9 @@ markers = [
 filterwarnings = [
     "error",
     "ignore::DeprecationWarning:pkg_resources",
+    # hmmlearn 0.3.x rebinds ndarray.shape in-place, deprecated in NumPy 2.5.
+    # Scoped to hmmlearn internals; drop when hmmlearn ships a NumPy 2.5 fix.
+    "ignore:Setting the shape on a NumPy array:DeprecationWarning:hmmlearn",
     "ignore:The NumPy module was reloaded:UserWarning",
 ]
 
