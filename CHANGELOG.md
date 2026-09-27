@@ -46,5 +46,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `Index`, fixing a `mypy` `call-overload` error.
 - Added `arch` and `statsmodels` to the `mypy` `ignore_missing_imports` list
   (optional and transitively-installed imports), so `mypy quantspt/` is clean.
+- `visualization.model_diagnostics.plot_residuals` no longer raises NumPy's
+  "Degrees of freedom <= 0" warning (promoted to an error by the test
+  configuration) on 1-element input; the ±2σ bands collapse to the residual.
+- `post_processing.clean_weights.enforce_bounds` docstring now states the real
+  contract — bounded renormalisation: bounds respected, unit sum, idempotent.
+  The previous "clip weights and renormalise" wording described a one-step
+  algorithm whose output can violate the very bounds being enforced
+  (e.g. `[0.6, 0.3, 0.1]` with `upper=0.5` rescales to `[0.556, …]`).
 - Test configuration ignores hmmlearn's NumPy 2.5 `ndarray.shape` deprecation
   warning, which `filterwarnings = ["error"]` promoted to 13 spurious failures.
