@@ -595,7 +595,9 @@ class TestGPUConsistency:
             epochs=30,
             train_window=50,
             eval_window=10,
-            learning_rate=5e-3,
+            # Library default lr — at 5e-3 the optimizer collapses to a
+            # saturated state and the loss ends up higher than it started.
+            learning_rate=1e-4,
             seed=42,
             device="cuda",
         )
